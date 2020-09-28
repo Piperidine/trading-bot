@@ -6,6 +6,8 @@ import seaborn as sns
 from trading_bot.agent import Agent
 import logging
 import coloredlogs
+import tensorflow as tf
+import keras.backend as K
 
 from trading_bot.utils import show_eval_result, switch_k_backend_device, get_stock_data
 from trading_bot.methods import evaluate_model
@@ -18,7 +20,8 @@ def fn(ticker,strategy,ep_count,year):
     test_stock = 'data/Nifty50/Split/{}_{}.csv'.format(ticker,year)
     window_size = 10
     debug = True
-
+    tf.keras.backend.clear_session()
+    K.clear_session()
     agent = Agent(window_size, pretrained=True, model_name=model_name)
 
     # read csv into dataframe
